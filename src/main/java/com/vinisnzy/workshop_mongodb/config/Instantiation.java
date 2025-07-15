@@ -3,6 +3,7 @@ package com.vinisnzy.workshop_mongodb.config;
 import com.vinisnzy.workshop_mongodb.domain.Post;
 import com.vinisnzy.workshop_mongodb.domain.User;
 import com.vinisnzy.workshop_mongodb.dto.AuthorDTO;
+import com.vinisnzy.workshop_mongodb.dto.CommentDTO;
 import com.vinisnzy.workshop_mongodb.repository.PostRepository;
 import com.vinisnzy.workshop_mongodb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class Instantiation implements CommandLineRunner {
 
         Post post1 = new Post(null, dateFormat.parse("15/07/2025"), "Partiu viagem", "Vou viajar para São Paulo, abraços!", new AuthorDTO(maria));
         Post post2 = new Post(null, dateFormat.parse("18/07/2025"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+
+        CommentDTO comment1 = new CommentDTO("Boa viagem mano!", dateFormat.parse("15/07/2025"), new AuthorDTO(alex));
+        CommentDTO comment2 = new CommentDTO("Aproveite!", dateFormat.parse("16/07/2025"), new AuthorDTO(bob));
+        CommentDTO comment3 = new CommentDTO("Tenha um ótimo dia!", dateFormat.parse("18/07/2025"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(comment1, comment2));
+        post2.getComments().add(comment3);
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
