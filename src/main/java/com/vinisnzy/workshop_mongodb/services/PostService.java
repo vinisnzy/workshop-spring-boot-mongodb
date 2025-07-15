@@ -6,6 +6,7 @@ import com.vinisnzy.workshop_mongodb.services.exceptions.ObjectNotFoundException
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,15 @@ public class PostService {
         List<Post> posts = repository.findByTitle(text);
         if (posts.isEmpty()) {
             throw new ObjectNotFoundException("No posts found with the given title");
+        }
+        return posts;
+    }
+
+    public List<Post> fullSearch(String text, Date minDate, Date maxDate) {
+        maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+        List<Post> posts = repository.fullSearch(text, minDate, maxDate);
+        if (posts.isEmpty()) {
+            throw new ObjectNotFoundException("No posts found with the given criteria");
         }
         return posts;
     }
