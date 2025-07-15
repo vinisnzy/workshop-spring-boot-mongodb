@@ -1,5 +1,6 @@
 package com.vinisnzy.workshop_mongodb.resources;
 
+import com.vinisnzy.workshop_mongodb.domain.Post;
 import com.vinisnzy.workshop_mongodb.domain.User;
 import com.vinisnzy.workshop_mongodb.dto.UserDTO;
 import com.vinisnzy.workshop_mongodb.services.UserService;
@@ -23,6 +24,12 @@ public class UserResource {
         List<User> list = service.findAll();
         List<UserDTO> listDTO = list.stream().map(UserDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
     @GetMapping("/{id}")
