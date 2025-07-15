@@ -6,6 +6,7 @@ import com.vinisnzy.workshop_mongodb.services.exceptions.ObjectNotFoundException
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,13 @@ public class PostService {
             throw new ObjectNotFoundException("Post not found");
         }
         return post.get();
+    }
+
+    public List<Post> findByTitle(String text) {
+        List<Post> posts = repository.findByTitleContainingIgnoreCase(text);
+        if (posts.isEmpty()) {
+            throw new ObjectNotFoundException("No posts found with the given title");
+        }
+        return posts;
     }
 }
