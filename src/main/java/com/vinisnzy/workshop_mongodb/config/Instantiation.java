@@ -2,6 +2,7 @@ package com.vinisnzy.workshop_mongodb.config;
 
 import com.vinisnzy.workshop_mongodb.domain.Post;
 import com.vinisnzy.workshop_mongodb.domain.User;
+import com.vinisnzy.workshop_mongodb.dto.AuthorDTO;
 import com.vinisnzy.workshop_mongodb.repository.PostRepository;
 import com.vinisnzy.workshop_mongodb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,11 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, dateFormat.parse("15/07/2025"), "Partiu viagem", "Vou viajar para São Paulo, abraços!", maria);
-        Post post2 = new Post(null, dateFormat.parse("18/07/2025"), "Bom dia", "Acordei feliz hoje!", maria);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, dateFormat.parse("15/07/2025"), "Partiu viagem", "Vou viajar para São Paulo, abraços!", new AuthorDTO(maria));
+        Post post2 = new Post(null, dateFormat.parse("18/07/2025"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
