@@ -1,0 +1,24 @@
+package com.vinisnzy.workshop_mongodb.services;
+
+import com.vinisnzy.workshop_mongodb.domain.Post;
+import com.vinisnzy.workshop_mongodb.repository.PostRepository;
+import com.vinisnzy.workshop_mongodb.services.exceptions.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class PostService {
+
+    @Autowired
+    private PostRepository repository;
+
+    public Post findById(String id) {
+        Optional<Post> post = repository.findById(id);
+        if (post.isEmpty()) {
+            throw new ObjectNotFoundException("Post not found");
+        }
+        return post.get();
+    }
+}
